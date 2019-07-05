@@ -42,7 +42,7 @@ class CountDownControl extends React.Component {
                 </div>
                 <div className="count-down-control">
                     <button
-                        onClick={this.props.clickStart}
+                        onClick={this.props.clickStart(this.state.minuteInput)}
                         className="count-down-start"
                     >
                       <i className="material-icons">play_arrow</i>
@@ -98,21 +98,21 @@ class App extends React.Component {
       this.setState({displayClass: 'count-display-purple'});
   };
 
-  handleStart(minutes){
-      let startTime = new Date().getTime();
+  handleStart = (minutes) => {
+      if (minutes > 0 ){
+          let startTime = new Date().getTime();
       const warningTimerId = setTimeout(this._display_warning, minutes * 60 * .8);
       const endTimerId = setTimeout(this._display_end, minutes * 60);
 
-      this.setState((state, props) => {
-          return {
+      this.setState({
               countDown: true,
               warningTimerId: warningTimerId,
               endTimerId: endTimerId,
               timerMinutes: startTime,
 
-          }
-      })
-  }
+          })
+      }
+  };
 
   render() {
     return (
