@@ -6,7 +6,7 @@ class CountDownClock extends React.Component {
         return (
             <div className="count-down-clock-wrapper">
               <div className="count-down-clock">
-                {/* TODO */}
+                {this.props.display}
               </div>
             </div>
         )
@@ -62,17 +62,60 @@ class CountDownControl extends React.Component {
 class CountDownDisplay extends React.Component {
     render() {
         return (
-            <div className="count-down-display count-display-green"></div>
+            <div className={"count-down-display " + this.props.display} ></div>
         )
     };
 }
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      displayClass: 'count-display-green',
+      countDown: false,
+      timerMinutes: null,
+      remainingTime: null,
+      warningTime: null
+    };
+  }
+
+  calculateRemainingTime(){
+    //Initial count down
+    if (this.state.countDown && !this.state.remainingTime){
+      this.setState((state, props) => {
+        return {remainingTime: state.timerMinutes * 60};  //Return time in seconds
+      });
+    }
+    // Active count down
+    else if (this.state.countDown && this.state.remainingTime){
+      this.setState((state, props) => {
+        return {remainingTime: state.remainingTime - 1}; //subtract a second
+      });
+    }
+    // Paused count down
+    else if (!this.state.countDown && this.state.remainingTime){
+      this.setState((state, props) => {
+        return {remainingTime: state.remainingTime};  //return remaining time since time is paused
+      });
+    }
+    // Count down not started
+    else {
+      this.setState((state, props) => {
+        return {remainingTime : null};  //there is no timer
+      });
+    }
+  }
+
+
   render() {
     return (
         <div className="app">
-          <CountDownDisplay/>
-          <CountDownClock/>
+          <CountDownDisplay
+            display={this.state.displayClass}
+          />
+          <CountDownClock
+            display={this.state.remainingTime}
+          />
           <CountDownInput/>
           <CountDownControl/>
         </div>
