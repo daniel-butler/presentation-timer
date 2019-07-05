@@ -2,32 +2,50 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.count-down-display {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.count-display-green {
+  background: #c3d600;
+
 }
 
-.App-link {
-  color: #61dafb;
+.count-display-gold {
+  background: #fcbc23;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.count-display-purple {
+  background: #321052;
+
+}
+
+.count-down-control {
+  text-align: center;
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+}
+
+.count-down-input-wrapper {
+  text-align: center;
+  position: fixed;
+  bottom: 100px;
+  width: 100%;
+}
+
+.count-down-clock-wrapper {
+    text-align: center;
+  position: fixed;
+  top: 30px;
+  width: 100%;
 }
