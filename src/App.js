@@ -14,6 +14,17 @@ class CountDownClock extends React.Component {
 }
 
 class CountDownControl extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            minuteInput: null
+        };
+    }
+
+    handleMinuteChange = (e) => {
+        this.setState({minuteInput: parseFloat(e.target.value)})
+    };
+
     render() {
         return (
             <div className="base-control">
@@ -23,8 +34,9 @@ class CountDownControl extends React.Component {
                       type="number"
                       className="count-down-input"
                       min="1"
+                      onChange={this.handleMinuteChange}
                   >
-                      {this.props.timerMinutes}
+                      {this.state.value}
                   </input>
                   <p>Warning will displayed after {/* TODO: Fill in Time */} minute(s).</p>
                 </div>
@@ -78,17 +90,13 @@ class App extends React.Component {
     };
   }
 
-  _display_warning(){
-      this.setState((state, props) =>{
-          return {displayClass: 'count-display-gold'};
-      });
-  }
+  _display_warning = () => {
+      this.setState({displayClass: 'count-display-gold'});
+  };
 
-  _display_end(){
-      this.setState((state, props) => {
-          return {displayClass: 'count-display-purple'};
-      })
-  }
+  _display_end = () => {
+      this.setState({displayClass: 'count-display-purple'});
+  };
 
   handleStart(minutes){
       let startTime = new Date().getTime();
@@ -116,7 +124,7 @@ class App extends React.Component {
             display={this.state.remainingSeconds}
           />
           <CountDownControl
-            clickStart={this.handleStart()}
+            clickStart={this.handleStart}
           />
         </div>
     )
