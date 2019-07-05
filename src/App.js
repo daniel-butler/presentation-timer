@@ -13,46 +13,44 @@ class CountDownClock extends React.Component {
     };
 }
 
-class CountDownInput extends React.Component {
-    render() {
-        return (
-            <div className="count-down-input-wrapper">
-              <p>Enter Time in Minutes</p>
-              <input
-                  type="number"
-                  className="count-down-input"
-                  min="1"
-              />
-              <p>Warning will displayed after {/* TODO: Fill in Time */} minute(s).</p>
-            </div>
-        )
-    };
-}
-
 class CountDownControl extends React.Component {
     render() {
         return (
-            <div className="count-down-control">
-                <button
-                    className="count-down-start"
-                >
-                  <i className="material-icons">play_arrow</i>
-                </button>
-                <button
-                    className="count-down-pause"
-                >
-                  <i className="material-icons">pause</i>
-                </button>
-                <button
-                    className="count-down-stop"
-                >
-                  <i className="material-icons">stop</i>
-                </button>
-                <button
-                    className="count-down-restart"
-                >
-                  <i className="material-icons">repeat</i>
-                </button>
+            <div className="base-control">
+                <div className="count-down-input-wrapper">
+                  <p>Enter Time in Minutes</p>
+                  <input
+                      type="number"
+                      className="count-down-input"
+                      min="1"
+                  >
+                      {this.props.timerMinutes}
+                  </input>
+                  <p>Warning will displayed after {/* TODO: Fill in Time */} minute(s).</p>
+                </div>
+                <div className="count-down-control">
+                    <button
+                        onClick={this.props.clickStart}
+                        className="count-down-start"
+                    >
+                      <i className="material-icons">play_arrow</i>
+                    </button>
+                    <button
+                        className="count-down-pause"
+                    >
+                      <i className="material-icons">pause</i>
+                    </button>
+                    <button
+                        className="count-down-stop"
+                    >
+                      <i className="material-icons">stop</i>
+                    </button>
+                    <button
+                        className="count-down-restart"
+                    >
+                      <i className="material-icons">repeat</i>
+                    </button>
+                </div>
             </div>
         )
     };
@@ -62,7 +60,7 @@ class CountDownControl extends React.Component {
 class CountDownDisplay extends React.Component {
     render() {
         return (
-            <div className={"count-down-display " + this.props.display} ></div>
+            <div className={"count-down-display " + this.props.display} />
         )
     };
 }
@@ -71,41 +69,42 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      displayClass: 'count-display-green',
-      countDown: false,
-      timerMinutes: null,
-      remainingTime: null,
-      warningTime: null
+        displayClass: 'count-display-green',
+        countDown: false,
+        warningTimerId: null,
+        endTimerId: null,
+        timerMinutes: null,
+        remainingSeconds: null
     };
   }
 
-  calculateRemainingTime(){
-    //Initial count down
-    if (this.state.countDown && !this.state.remainingTime){
-      this.setState((state, props) => {
-        return {remainingTime: state.timerMinutes * 60};  //Return time in seconds
+  _display_warning(){
+      this.setState((state, props) =>{
+          return {displayClass: 'count-display-gold'};
       });
-    }
-    // Active count down
-    else if (this.state.countDown && this.state.remainingTime){
-      this.setState((state, props) => {
-        return {remainingTime: state.remainingTime - 1}; //subtract a second
-      });
-    }
-    // Paused count down
-    else if (!this.state.countDown && this.state.remainingTime){
-      this.setState((state, props) => {
-        return {remainingTime: state.remainingTime};  //return remaining time since time is paused
-      });
-    }
-    // Count down not started
-    else {
-      this.setState((state, props) => {
-        return {remainingTime : null};  //there is no timer
-      });
-    }
   }
 
+  _display_end(){
+      this.setState((state, props) => {
+          return {displayClass: 'count-display-purple'};
+      })
+  }
+
+  handleStart(minutes){
+      let startTime = new Date().getTime();
+      const warningTimerId = setTimeout(this._display_warning, minutes * 60 * .8);
+      const endTimerId = setTimeout(this._display_end, minutes * 60);
+
+      this.setState((state, props) => {
+          return {
+              countDown: true,
+              warningTimerId: warningTimerId,
+              endTimerId: endTimerId,
+              timerMinutes: startTime,
+
+          }
+      })
+  }
 
   render() {
     return (
@@ -114,10 +113,11 @@ class App extends React.Component {
             display={this.state.displayClass}
           />
           <CountDownClock
-            display={this.state.remainingTime}
+            display={this.state.remainingSeconds}
           />
-          <CountDownInput/>
-          <CountDownControl/>
+          <CountDownControl
+            clickStart={this.handleStart()}
+          />
         </div>
     )
   }
