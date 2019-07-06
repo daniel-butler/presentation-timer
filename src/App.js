@@ -97,6 +97,7 @@ class App extends React.Component {
       // TODO: Handle when in warning state after clicking pause what will the timer be if negative etc...
       // maybe look at the display to see if it is gold then use that to set the timer.
       if (this.state.timerSeconds > 0 && !this.state.endTimerId ){
+          // Set at beginning so timer runs
           this.setState({
               countDown: true
           });
@@ -109,7 +110,7 @@ class App extends React.Component {
               displayClass: 'count-display-green',
               warningTimerId: warningTimerId,
               endTimerId: endTimerId,
-              timerIntervalId: intervalId,
+              clockIntervalId: intervalId,
           })
       }
   };
@@ -119,10 +120,16 @@ class App extends React.Component {
           clearTimeout(this.state.warningTimerId);
           clearTimeout(this.state.endTimerId);
 
+          if(clearTimer){
+              console.log("Clear interval");
+              clearInterval(this.state.clockIntervalId);
+          }
+
           this.setState({
               warningTimerId: null,
               endTimerId: null,
-              countDown: clearTimer ? null : this.state.countDown,
+              clockIntervalId: clearTimer ? null : this.state.clockIntervalId,
+              countDown: clearTimer ? false : this.state.countDown,
               remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
               displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
           });
@@ -130,10 +137,11 @@ class App extends React.Component {
   };
 
   timer = () => {
-      this.setState({
-          remainingSeconds: this.state.remainingSeconds ? this.state.remainingSeconds - 1 : this.state.timerSeconds
-      });
-
+      if (this.state.countDown) {
+          this.setState({
+              remainingSeconds: this.state.remainingSeconds ? this.state.remainingSeconds - 1 : this.state.timerSeconds
+          });
+      }
   };
 
     render() {
