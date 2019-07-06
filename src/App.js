@@ -30,17 +30,25 @@ class CountDownControl extends React.Component {
         }
     }
 
+    handleEnterKeyUp(event){
+        if(event.key === 'Enter'){
+            this.props.clickStart();
+        }
+    }
+
     render() {
         return (
             <div className="base-control">
                 <div className="count-down-input-wrapper">
                     <p>Enter Time in Minutes</p>
                     <input
+                        id="timeInMinutes"
                         type="number"
                         className="count-down-input"
                         min=".1"
                         step=".1"
-                        onBlur={this.props.inputMinute}
+                        onKeyPress={this.props.inputMinute}
+                        onKeyUp={this.handleEnterKeyUp.bind(this)}
                     >
                     </input>
                     <p>{this.displayWarningTime()}</p>
