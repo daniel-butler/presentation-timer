@@ -37,6 +37,7 @@ class CountDownControl extends React.Component {
                       <i className="material-icons">play_arrow</i>
                     </button>
                     <button
+                        onClick={this.props.clickPause}
                         className="count-down-pause"
                     >
                       <i className="material-icons">pause</i>
@@ -46,11 +47,6 @@ class CountDownControl extends React.Component {
                         className="count-down-stop"
                     >
                       <i className="material-icons">stop</i>
-                    </button>
-                    <button
-                        className="count-down-restart"
-                    >
-                      <i className="material-icons">repeat</i>
                     </button>
                 </div>
             </div>
@@ -73,6 +69,7 @@ class App extends React.Component {
     this.state = {
         displayClass: 'count-display-green',
         countDown: false,
+        paused: false,
         warningTimerId: null,
         endTimerId: null,
         timerSeconds: null,
@@ -97,9 +94,13 @@ class App extends React.Component {
       // TODO: Handle when in warning state after clicking pause what will the timer be if negative etc...
       // maybe look at the display to see if it is gold then use that to set the timer.
       if (this.state.timerSeconds > 0 && !this.state.endTimerId ){
+          let timerSeconds = this.state.timerSeconds;
+
+
           // Set at beginning so timer runs
           this.setState({
-              countDown: true
+              countDown: true,
+              paused: false,
           });
 
           const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
@@ -116,24 +117,38 @@ class App extends React.Component {
   };
 
   handleStop = (clearTimer=true) => {
-      if (this.state.countDown) {
+      if (this.state.countDown && !this.state.paused) {
           clearTimeout(this.state.warningTimerId);
           clearTimeout(this.state.endTimerId);
-
-          if(clearTimer){
-              console.log("Clear interval");
-              clearInterval(this.state.clockIntervalId);
-          }
+          clearInterval(this.state.clockIntervalId);
 
           this.setState({
               warningTimerId: null,
               endTimerId: null,
+              countDown: false,
               clockIntervalId: clearTimer ? null : this.state.clockIntervalId,
-              countDown: clearTimer ? false : this.state.countDown,
+              remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
+              displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
+          });
+      } else if (this.state.paused) {
+          // if paused and click stop clear everything remaining and say that it is no longer paused.
+          clearInterval(this.state.clockIntervalId);
+
+          this.setState({
+              paused: false,
+              clockIntervalId: clearTimer ? null : this.state.clockIntervalId,
               remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
               displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
           });
       }
+  };
+
+  handlePause = () => {
+      this.setState({
+          paused: true
+      });
+
+      this.handleStop(false);
   };
 
   timer = () => {
@@ -157,6 +172,7 @@ class App extends React.Component {
             inputMinute={this.handleMinuteInput}
             clickStart={this.handleStart}
             clickStop={this.handleStop}
+            clickPause={this.handlePause}
           />
         </div>
     )
