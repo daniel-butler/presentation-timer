@@ -16,6 +16,7 @@
 
 .count-display-green {
   background: #c3d600;
+  color: #321052;
 
 }
 
@@ -26,7 +27,7 @@
 
 .count-display-purple {
   background: #321052;
-
+  color: #c3d600;
 }
 
 .count-down-control {
@@ -34,13 +35,16 @@
   position: fixed;
   bottom: 30px;
   width: 100%;
+  z-index: 0;
 }
 
 .count-down-input-wrapper {
   text-align: center;
+  font-weight: bold;
   position: fixed;
   bottom: 100px;
   width: 100%;
+  z-index: 0;
 }
 
 .count-down-clock-wrapper {
@@ -48,4 +52,5 @@
   position: fixed;
   top: 30px;
   width: 100%;
+  z-index: 0;
 }

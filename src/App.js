@@ -74,7 +74,9 @@ class CountDownControl extends React.Component {
 class CountDownDisplay extends React.Component {
     render() {
         return (
-            <div className={"count-down-display " + this.props.display} />
+            <div className={"count-down-display " + this.props.display}>
+                {this.props.children}
+            </div>
         )
     };
 }
@@ -181,22 +183,23 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-              <CountDownDisplay
-                display={this.state.displayClass}
-              />
-              <CountDownClock
-                remainingSeconds={this.state.remainingSeconds}
-                formatter={this.formatSecondsToTimer}
-              />
-              <CountDownControl
-                inputMinute={this.handleMinuteInput}
-                remainingSeconds={this.state.remainingSeconds}
-                warningSeconds={this.state.warningSeconds}
-                formatter={this.formatSecondsToTimer}
-                clickStart={this.handleStart}
-                clickStop={this.handleStop}
-                clickPause={this.handlePause}
-              />
+                <CountDownDisplay
+                    display={this.state.displayClass}
+                >
+                    <CountDownClock
+                        remainingSeconds={this.state.remainingSeconds}
+                        formatter={this.formatSecondsToTimer}
+                    />
+                    <CountDownControl
+                        inputMinute={this.handleMinuteInput}
+                        remainingSeconds={this.state.remainingSeconds}
+                        warningSeconds={this.state.warningSeconds}
+                        formatter={this.formatSecondsToTimer}
+                        clickStart={this.handleStart}
+                        clickStop={this.handleStop}
+                        clickPause={this.handlePause}
+                    />
+                </CountDownDisplay>
             </div>
         )
       }
