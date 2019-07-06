@@ -86,75 +86,50 @@ class App extends React.Component {
         displayClass: 'count-display-green',
         countDown: false,
         paused: false,
-        warningTimerId: null,
-        endTimerId: null,
         timerSeconds: null,
         remainingSeconds: null,
+        warningSeconds: null,
         clockIntervalId: null
     };
   }
-
-  _display_warning = () => {
-      this.setState({displayClass: 'count-display-gold'});
-  };
-
-  _display_end = () => {
-      this.setState({displayClass: 'count-display-purple'});
-  };
 
   handleMinuteInput = (e) => {
         this.setState({timerSeconds: parseFloat(e.target.value) * 60})
     };
 
   handleStart = () => {
-      // TODO: Handle when in warning state after clicking pause what will the timer be if negative etc...
-      // maybe look at the display to see if it is gold then use that to set the timer.
-      if (this.state.timerSeconds > 0 && !this.state.endTimerId ){
-          let timerSeconds = this.state.timerSeconds;
-
-
+      if (this.state.timerSeconds > 0 && !this.state.clockIntervalId ){
           // Set at beginning so timer runs
           this.setState({
               countDown: true,
               paused: false,
+              warningSeconds: Math.floor(this.state.timerSeconds * 0.20)
           });
 
-          const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
-          const endTimerId = setTimeout(this._display_end, this.state.timerSeconds * 1000);
+          // create timer
           const intervalId = setInterval(this.timer, 1000);
 
           this.setState({
               displayClass: 'count-display-green',
-              warningTimerId: warningTimerId,
-              endTimerId: endTimerId,
               clockIntervalId: intervalId,
           })
+      } else if (this.state.paused) {
+          this.setState({
+              paused: false,
+              countDown: true
+          });
       }
   };
 
-  handleStop = (clearTimer=true) => {
-      if (this.state.countDown && !this.state.paused) {
-          clearTimeout(this.state.warningTimerId);
-          clearTimeout(this.state.endTimerId);
+  handleStop = () => {
+      if (this.state.countDown) {
           clearInterval(this.state.clockIntervalId);
-
           this.setState({
-              warningTimerId: null,
-              endTimerId: null,
               countDown: false,
-              clockIntervalId: clearTimer ? null : this.state.clockIntervalId,
-              remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
-              displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
-          });
-      } else if (this.state.paused) {
-          // if paused and click stop clear everything remaining and say that it is no longer paused.
-          clearInterval(this.state.clockIntervalId);
-
-          this.setState({
               paused: false,
-              clockIntervalId: clearTimer ? null : this.state.clockIntervalId,
-              remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
-              displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
+              clockIntervalId: null,
+              remainingSeconds: null,
+              displayClass: 'count-display-green'
           });
       }
   };
@@ -163,12 +138,11 @@ class App extends React.Component {
       this.setState({
           paused: true
       });
-
-      this.handleStop(false);
   };
 
   timer = () => {
-      if (this.state.countDown) {
+      // Handles the remaining time
+      if (this.state.countDown && !this.state.paused) {
           let remainingSeconds = 0;
           if (this.state.remainingSeconds > -1000 && this.state.remainingSeconds !== null){
               remainingSeconds = this.state.remainingSeconds - 1;
@@ -176,8 +150,18 @@ class App extends React.Component {
               remainingSeconds = this.state.timerSeconds;
           }
 
+          let displayColor = '';
+          if(remainingSeconds > this.state.warningSeconds){
+              displayColor = 'count-display-green';
+          } else if (remainingSeconds > 0 && remainingSeconds <= this.state.warningSeconds){
+              displayColor = 'count-display-gold';
+          } else {
+              displayColor = 'count-display-purple';
+          }
+
           this.setState({
-              remainingSeconds: remainingSeconds
+              remainingSeconds: remainingSeconds,
+              displayClass: displayColor
           });
       }
   };
