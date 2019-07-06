@@ -80,111 +80,111 @@ class CountDownDisplay extends React.Component {
 }
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-        displayClass: 'count-display-green',
-        countDown: false,
-        paused: false,
-        timerSeconds: null,
-        remainingSeconds: null,
-        warningSeconds: null,
-        clockIntervalId: null
-    };
-  }
+    constructor(props){
+        super(props);
+        this.state = {
+            displayClass: 'count-display-green',
+            countDown: false,
+            paused: false,
+            timerSeconds: null,
+            remainingSeconds: null,
+            warningSeconds: null,
+            clockIntervalId: null
+        };
+    }
 
-  handleMinuteInput = (e) => {
+    handleMinuteInput = (e) => {
         this.setState({timerSeconds: parseFloat(e.target.value) * 60})
     };
 
-  handleStart = () => {
-      if (this.state.timerSeconds > 0 && !this.state.clockIntervalId ){
-          // Set at beginning so timer runs
-          this.setState({
-              countDown: true,
-              paused: false,
-              warningSeconds: Math.floor(this.state.timerSeconds * 0.20)
-          });
+    handleStart = () => {
+        if (this.state.timerSeconds > 0 && !this.state.clockIntervalId ){
+            // Set at beginning so timer runs
+            this.setState({
+                countDown: true,
+                paused: false,
+                warningSeconds: Math.floor(this.state.timerSeconds * 0.20)
+            });
 
-          // create timer
-          const intervalId = setInterval(this.timer, 1000);
+            // create timer
+            const intervalId = setInterval(this.timer, 1000);
 
-          this.setState({
-              displayClass: 'count-display-green',
-              clockIntervalId: intervalId,
-          })
-      } else if (this.state.paused) {
-          this.setState({
-              paused: false,
-              countDown: true
-          });
-      }
-  };
+            this.setState({
+                displayClass: 'count-display-green',
+                clockIntervalId: intervalId,
+            })
+        } else if (this.state.paused) {
+            this.setState({
+                paused: false,
+                countDown: true
+            });
+        }
+    };
 
-  handleStop = () => {
-      if (this.state.countDown) {
-          clearInterval(this.state.clockIntervalId);
-          this.setState({
-              countDown: false,
-              paused: false,
-              clockIntervalId: null,
-              remainingSeconds: null,
-              displayClass: 'count-display-green'
-          });
-      }
-  };
+    handleStop = () => {
+        if (this.state.countDown) {
+            clearInterval(this.state.clockIntervalId);
+            this.setState({
+                countDown: false,
+                paused: false,
+                clockIntervalId: null,
+                remainingSeconds: null,
+                displayClass: 'count-display-green'
+            });
+        }
+    };
 
-  handlePause = () => {
-      this.setState({
-          paused: true
-      });
-  };
+    handlePause = () => {
+        this.setState({
+            paused: true
+        });
+    };
 
-  timer = () => {
-      // Handles the remaining time
-      if (this.state.countDown && !this.state.paused) {
-          let remainingSeconds = 0;
-          if (this.state.remainingSeconds > -1000 && this.state.remainingSeconds !== null){
-              remainingSeconds = this.state.remainingSeconds - 1;
-          } else {
-              remainingSeconds = this.state.timerSeconds;
-          }
+    timer = () => {
+        // Handles the remaining time
+        if (this.state.countDown && !this.state.paused) {
+            let remainingSeconds = 0;
+            if (this.state.remainingSeconds > -1000 && this.state.remainingSeconds !== null){
+                remainingSeconds = this.state.remainingSeconds - 1;
+            } else {
+                remainingSeconds = this.state.timerSeconds;
+            }
 
-          let displayColor = '';
-          if(remainingSeconds > this.state.warningSeconds){
-              displayColor = 'count-display-green';
-          } else if (remainingSeconds > 0 && remainingSeconds <= this.state.warningSeconds){
-              displayColor = 'count-display-gold';
-          } else {
-              displayColor = 'count-display-purple';
-          }
+            let displayColor = '';
+            if(remainingSeconds > this.state.warningSeconds){
+                displayColor = 'count-display-green';
+            } else if (remainingSeconds > 0 && remainingSeconds <= this.state.warningSeconds){
+                displayColor = 'count-display-gold';
+            } else {
+                displayColor = 'count-display-purple';
+            }
 
-          this.setState({
-              remainingSeconds: remainingSeconds,
-              displayClass: displayColor
-          });
-      }
-  };
+            this.setState({
+                remainingSeconds: remainingSeconds,
+                displayClass: displayColor
+            });
+        }
+    };
 
     render() {
-    return (
-        <div className="app">
-          <CountDownDisplay
-            display={this.state.displayClass}
-          />
-          <CountDownClock
-            display={this.state.remainingSeconds}
-          />
-          <CountDownControl
-            inputMinute={this.handleMinuteInput}
-            timer={this.state.remainingSeconds}
-            clickStart={this.handleStart}
-            clickStop={this.handleStop}
-            clickPause={this.handlePause}
-          />
-        </div>
-    )
-  }
+        return (
+            <div className="app">
+              <CountDownDisplay
+                display={this.state.displayClass}
+              />
+              <CountDownClock
+                display={this.state.remainingSeconds}
+              />
+              <CountDownControl
+                inputMinute={this.handleMinuteInput}
+                timer={this.state.remainingSeconds}
+                clickStart={this.handleStart}
+                clickStop={this.handleStop}
+                clickPause={this.handlePause}
+              />
+            </div>
+        )
+      }
 }
 
 
