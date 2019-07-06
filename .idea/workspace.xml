@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="119" selection-start-line="119" selection-end-line="119" />
+            <state relative-caret-position="242">
+              <caret line="114" column="4" lean-forward="true" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -154,7 +154,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562350632166</updated>
-      <workItem from="1562350634017" duration="16257000" />
+      <workItem from="1562350634017" duration="17981000" />
     </task>
     <task id="LOCAL-00001" summary="template of clock and timer created">
       <created>1562355465611</created>
@@ -198,11 +198,25 @@
       <option name="project" value="LOCAL" />
       <updated>1562435304514</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="handle stop and extended it so that handlePause can call it too">
+      <created>1562436366851</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1562436366851</updated>
+    </task>
+    <task id="LOCAL-00008" summary="adding a timer to calculate the remaining time and display the remaining time in the Clock">
+      <created>1562436838156</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1562436838156</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16257000" />
+    <option name="totallyTimeSpent" value="17981000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
@@ -247,7 +261,9 @@
     <MESSAGE value="cannot read property _display_warning of undefined" />
     <MESSAGE value="maximum update depth exceeded" />
     <MESSAGE value="out of an infinite loop. The start input element was being rendered, calling a setState function, which made it rendered again and so on.. Stopped doing that and moved the handleMinute input to the App level. Also changed from minutes to seconds to make setting timeouts more straight forward" />
-    <option name="LAST_COMMIT_MESSAGE" value="out of an infinite loop. The start input element was being rendered, calling a setState function, which made it rendered again and so on.. Stopped doing that and moved the handleMinute input to the App level. Also changed from minutes to seconds to make setting timeouts more straight forward" />
+    <MESSAGE value="handle stop and extended it so that handlePause can call it too" />
+    <MESSAGE value="adding a timer to calculate the remaining time and display the remaining time in the Clock" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding a timer to calculate the remaining time and display the remaining time in the Clock" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/index.html">
@@ -290,8 +306,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        <state relative-caret-position="242">
+          <caret line="114" column="4" lean-forward="true" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="4" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

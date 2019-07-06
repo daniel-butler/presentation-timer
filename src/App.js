@@ -97,15 +97,20 @@ class App extends React.Component {
       // TODO: Handle when in warning state after clicking pause what will the timer be if negative etc...
       // maybe look at the display to see if it is gold then use that to set the timer.
       if (this.state.timerSeconds > 0 && !this.state.endTimerId ){
-        const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
-        const endTimerId = setTimeout(this._display_end, this.state.timerSeconds * 1000);
+          this.setState({
+              countDown: true
+          });
 
-        this.setState({
-            displayClass: 'count-display-green',
-            countDown: true,
-            warningTimerId: warningTimerId,
-            endTimerId: endTimerId,
-        })
+          const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
+          const endTimerId = setTimeout(this._display_end, this.state.timerSeconds * 1000);
+          const intervalId = setInterval(this.timer, 1000);
+
+          this.setState({
+              displayClass: 'count-display-green',
+              warningTimerId: warningTimerId,
+              endTimerId: endTimerId,
+              timerIntervalId: intervalId,
+          })
       }
   };
 
@@ -125,22 +130,11 @@ class App extends React.Component {
   };
 
   timer = () => {
-      if (this.countDown){
-          this.setState({
-              remainingSeconds: this.state.remainingSeconds - 1
-          });
-      }
+      this.setState({
+          remainingSeconds: this.state.remainingSeconds ? this.state.remainingSeconds - 1 : this.state.timerSeconds
+      });
 
   };
-
-  componentDidMount() {
-      let intervalId = setInterval(this.timer, 1000);
-
-      this.setState({
-          timerIntervalId: intervalId
-      });
-  }
-
 
     render() {
     return (
