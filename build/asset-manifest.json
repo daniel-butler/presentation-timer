@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dbutlerdb/presentation-timer/static/css/main.f614c8b3.chunk.css",
+    "main.js": "/dbutlerdb/presentation-timer/static/js/main.3a2c08fa.chunk.js",
+    "main.js.map": "/dbutlerdb/presentation-timer/static/js/main.3a2c08fa.chunk.js.map",
+    "runtime~main.js": "/dbutlerdb/presentation-timer/static/js/runtime~main.170af042.js",
+    "runtime~main.js.map": "/dbutlerdb/presentation-timer/static/js/runtime~main.170af042.js.map",
+    "static/js/2.dfb0cf60.chunk.js": "/dbutlerdb/presentation-timer/static/js/2.dfb0cf60.chunk.js",
+    "static/js/2.dfb0cf60.chunk.js.map": "/dbutlerdb/presentation-timer/static/js/2.dfb0cf60.chunk.js.map",
+    "index.html": "/dbutlerdb/presentation-timer/index.html",
+    "precache-manifest.7548d4736f4f2b536a88cf83d10a0b10.js": "/dbutlerdb/presentation-timer/precache-manifest.7548d4736f4f2b536a88cf83d10a0b10.js",
+    "service-worker.js": "/dbutlerdb/presentation-timer/service-worker.js",
+    "static/css/main.f614c8b3.chunk.css.map": "/dbutlerdb/presentation-timer/static/css/main.f614c8b3.chunk.css.map"
+  }
+}
