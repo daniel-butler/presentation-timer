@@ -2,17 +2,9 @@ import React from 'react';
 import './App.css';
 
 class CountDownClock extends React.Component {
-    displayCountDown = (warning=false) => {
-        if(this.props.display !== null) {
-            let minutes = 0;
-            if(this.props.display < -0.1) {  //display negatives correctly. Floor will make -0.1 = -1
-                minutes = Math.floor(this.props.display  / 60) + 1;
-            } else {
-                minutes = Math.floor(this.props.display  / 60);
-
-            }
-            let seconds = Math.floor(this.props.display % 60);
-            return minutes + 'm ' + seconds + 's';
+    displayCountDown(){
+        if(this.props.remainingSeconds !== null) {
+            return this.props.formatter(this.props.remainingSeconds);
         } else{
             return 'Enter Time Below';
         }
@@ -30,20 +22,28 @@ class CountDownClock extends React.Component {
 }
 
 class CountDownControl extends React.Component {
+    displayWarningTime(){
+        if(this.props.remainingSeconds != null){
+            return 'Warning at: ' + this.props.formatter(this.props.warningSeconds);
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return (
             <div className="base-control">
                 <div className="count-down-input-wrapper">
-                  <p>Enter Time in Minutes</p>
-                  <input
-                      type="number"
-                      className="count-down-input"
-                      min=".1"
-                      step=".1"
-                      onBlur={this.props.inputMinute}
-                  >
-                  </input>
-                  <p>Warning will displayed after {/* TODO: Fill in Time */} minute(s).</p>
+                    <p>Enter Time in Minutes</p>
+                    <input
+                        type="number"
+                        className="count-down-input"
+                        min=".1"
+                        step=".1"
+                        onBlur={this.props.inputMinute}
+                    >
+                    </input>
+                    <p>{this.displayWarningTime()}</p>
                 </div>
                 <div className="count-down-control">
                     <button
@@ -166,6 +166,18 @@ class App extends React.Component {
         }
     };
 
+    formatSecondsToTimer = (seconds) => {
+        let mins = 0;
+        if( seconds < -0.1) {  //display negatives correctly. Floor will make -0.1 = -1
+            mins = Math.floor(seconds  / 60) + 1;
+        } else {
+            mins = Math.floor(seconds  / 60);
+
+        }
+        let secs = Math.floor(seconds % 60);
+        return mins + 'm ' + secs + 's';
+    };
+
     render() {
         return (
             <div className="app">
@@ -173,11 +185,14 @@ class App extends React.Component {
                 display={this.state.displayClass}
               />
               <CountDownClock
-                display={this.state.remainingSeconds}
+                remainingSeconds={this.state.remainingSeconds}
+                formatter={this.formatSecondsToTimer}
               />
               <CountDownControl
                 inputMinute={this.handleMinuteInput}
-                timer={this.state.remainingSeconds}
+                remainingSeconds={this.state.remainingSeconds}
+                warningSeconds={this.state.warningSeconds}
+                formatter={this.formatSecondsToTimer}
                 clickStart={this.handleStart}
                 clickStop={this.handleStop}
                 clickPause={this.handlePause}
