@@ -2,12 +2,23 @@ import React from 'react';
 import './App.css';
 
 class CountDownClock extends React.Component {
+    displayCountDown = () => {
+        if(this.props.display !== null) {
+            let minutes = Math.floor(this.props.display / 60);
+            let seconds = Math.floor(this.props.display % 60);
+
+            return minutes + 'm ' + seconds + 's';
+        } else{
+            return 'Enter Time Below';
+        }
+    };
+
     render() {
         return (
             <div className="count-down-clock-wrapper">
-              <div className="count-down-clock">
-                {this.props.display}
-              </div>
+              <h1 className="count-down-clock">
+                {this.displayCountDown()}
+              </h1>
             </div>
         )
     };
