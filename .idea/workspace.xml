@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="306">
+              <caret line="116" column="25" lean-forward="true" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -154,7 +154,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1562350632166</updated>
-      <workItem from="1562350634017" duration="20653000" />
+      <workItem from="1562350634017" duration="23410000" />
     </task>
     <task id="LOCAL-00001" summary="template of clock and timer created">
       <created>1562355465611</created>
@@ -233,11 +233,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562439967893</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="display the countdown">
+      <created>1562444741632</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1562444741632</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20653000" />
+    <option name="totallyTimeSpent" value="23410000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
@@ -248,7 +255,7 @@
       <window_info id="Job Explorer" />
       <window_info id="npm" side_tool="true" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18490154" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18490154" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Console" />
       <window_info anchor="bottom" id="DB Execution Console" />
@@ -287,7 +294,8 @@
     <MESSAGE value="created a timer that will run when start clicked. the remaining time rolls over once 0 is reached. Should display negative numbers" />
     <MESSAGE value="able to stop the timer and start it over again" />
     <MESSAGE value="working an pausing and starting up again" />
-    <option name="LAST_COMMIT_MESSAGE" value="working an pausing and starting up again" />
+    <MESSAGE value="display the countdown" />
+    <option name="LAST_COMMIT_MESSAGE" value="display the countdown" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/index.html">
@@ -330,8 +338,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="306">
+          <caret line="116" column="25" lean-forward="true" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="25" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

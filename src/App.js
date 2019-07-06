@@ -2,11 +2,16 @@ import React from 'react';
 import './App.css';
 
 class CountDownClock extends React.Component {
-    displayCountDown = () => {
+    displayCountDown = (warning=false) => {
         if(this.props.display !== null) {
-            let minutes = Math.floor(this.props.display / 60);
-            let seconds = Math.floor(this.props.display % 60);
+            let minutes = 0;
+            if(this.props.display < -0.1) {  //display negatives correctly. Floor will make -0.1 = -1
+                minutes = Math.floor(this.props.display  / 60) + 1;
+            } else {
+                minutes = Math.floor(this.props.display  / 60);
 
+            }
+            let seconds = Math.floor(this.props.display % 60);
             return minutes + 'm ' + seconds + 's';
         } else{
             return 'Enter Time Below';
@@ -164,8 +169,15 @@ class App extends React.Component {
 
   timer = () => {
       if (this.state.countDown) {
+          let remainingSeconds = 0;
+          if (this.state.remainingSeconds > -1000 && this.state.remainingSeconds !== null){
+              remainingSeconds = this.state.remainingSeconds - 1;
+          } else {
+              remainingSeconds = this.state.timerSeconds;
+          }
+
           this.setState({
-              remainingSeconds: this.state.remainingSeconds ? this.state.remainingSeconds - 1 : this.state.timerSeconds
+              remainingSeconds: remainingSeconds
           });
       }
   };
@@ -181,6 +193,7 @@ class App extends React.Component {
           />
           <CountDownControl
             inputMinute={this.handleMinuteInput}
+            timer={this.state.remainingSeconds}
             clickStart={this.handleStart}
             clickStop={this.handleStop}
             clickPause={this.handlePause}
