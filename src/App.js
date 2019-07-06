@@ -76,7 +76,8 @@ class App extends React.Component {
         warningTimerId: null,
         endTimerId: null,
         timerSeconds: null,
-        remainingSeconds: null
+        remainingSeconds: null,
+        clockIntervalId: null
     };
   }
 
@@ -123,7 +124,25 @@ class App extends React.Component {
       }
   };
 
-  render() {
+  timer = () => {
+      if (this.countDown){
+          this.setState({
+              remainingSeconds: this.state.remainingSeconds - 1
+          });
+      }
+
+  };
+
+  componentDidMount() {
+      let intervalId = setInterval(this.timer, 1000);
+
+      this.setState({
+          timerIntervalId: intervalId
+      });
+  }
+
+
+    render() {
     return (
         <div className="app">
           <CountDownDisplay
