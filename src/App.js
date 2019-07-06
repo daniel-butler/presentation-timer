@@ -48,7 +48,7 @@ class CountDownControl extends React.Component {
                         className="count-down-input"
                         min=".1"
                         step=".1"
-                        onKeyPress={this.props.inputMinute}
+                        onChange={this.props.inputMinute}
                         onKeyUp={this.handleEnterKeyUp.bind(this)}
                     >
                     </input>
