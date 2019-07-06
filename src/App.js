@@ -23,6 +23,7 @@ class CountDownControl extends React.Component {
                       type="number"
                       className="count-down-input"
                       min=".1"
+                      step=".1"
                       onBlur={this.props.inputMinute}
                   >
                   </input>
@@ -41,6 +42,7 @@ class CountDownControl extends React.Component {
                       <i className="material-icons">pause</i>
                     </button>
                     <button
+                        onClick={this.props.clickStop}
                         className="count-down-stop"
                     >
                       <i className="material-icons">stop</i>
@@ -91,7 +93,9 @@ class App extends React.Component {
     };
 
   handleStart = () => {
-      if (this.state.timerSeconds > 0 ){
+      // TODO: Handle when in warning state after clicking pause what will the timer be if negative etc...
+      // maybe look at the display to see if it is gold then use that to set the timer.
+      if (this.state.timerSeconds > 0 && !this.state.endTimerId ){
         const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
         const endTimerId = setTimeout(this._display_end, this.state.timerSeconds * 1000);
 
@@ -101,6 +105,21 @@ class App extends React.Component {
             warningTimerId: warningTimerId,
             endTimerId: endTimerId,
         })
+      }
+  };
+
+  handleStop = (clearTimer=true) => {
+      if (this.state.countDown) {
+          clearTimeout(this.state.warningTimerId);
+          clearTimeout(this.state.endTimerId);
+
+          this.setState({
+              warningTimerId: null,
+              endTimerId: null,
+              countDown: clearTimer ? null : this.state.countDown,
+              remainingSeconds: clearTimer ? null : this.state.remainingSeconds,
+              displayClass: clearTimer ? 'count-display-green' : this.state.displayClass,
+          });
       }
   };
 
@@ -114,8 +133,9 @@ class App extends React.Component {
             display={this.state.remainingSeconds}
           />
           <CountDownControl
-            clickStart={this.handleStart}
             inputMinute={this.handleMinuteInput}
+            clickStart={this.handleStart}
+            clickStop={this.handleStop}
           />
         </div>
     )
