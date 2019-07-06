@@ -14,17 +14,6 @@ class CountDownClock extends React.Component {
 }
 
 class CountDownControl extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            minuteInput: null
-        };
-    }
-
-    handleMinuteChange = (e) => {
-        this.setState({minuteInput: parseFloat(e.target.value)})
-    };
-
     render() {
         return (
             <div className="base-control">
@@ -33,16 +22,15 @@ class CountDownControl extends React.Component {
                   <input
                       type="number"
                       className="count-down-input"
-                      min="1"
-                      onChange={this.handleMinuteChange}
+                      min=".1"
+                      onBlur={this.props.inputMinute}
                   >
-                      {this.state.value}
                   </input>
                   <p>Warning will displayed after {/* TODO: Fill in Time */} minute(s).</p>
                 </div>
                 <div className="count-down-control">
                     <button
-                        onClick={this.props.clickStart(this.state.minuteInput)}
+                        onClick={this.props.clickStart}
                         className="count-down-start"
                     >
                       <i className="material-icons">play_arrow</i>
@@ -85,7 +73,7 @@ class App extends React.Component {
         countDown: false,
         warningTimerId: null,
         endTimerId: null,
-        timerMinutes: null,
+        timerSeconds: null,
         remainingSeconds: null
     };
   }
@@ -98,19 +86,21 @@ class App extends React.Component {
       this.setState({displayClass: 'count-display-purple'});
   };
 
-  handleStart = (minutes) => {
-      if (minutes > 0 ){
-          let startTime = new Date().getTime();
-      const warningTimerId = setTimeout(this._display_warning, minutes * 60 * .8);
-      const endTimerId = setTimeout(this._display_end, minutes * 60);
+  handleMinuteInput = (e) => {
+        this.setState({timerSeconds: parseFloat(e.target.value) * 60})
+    };
 
-      this.setState({
-              countDown: true,
-              warningTimerId: warningTimerId,
-              endTimerId: endTimerId,
-              timerMinutes: startTime,
+  handleStart = () => {
+      if (this.state.timerSeconds > 0 ){
+        const warningTimerId = setTimeout(this._display_warning, this.state.timerSeconds * 1000* .8);
+        const endTimerId = setTimeout(this._display_end, this.state.timerSeconds * 1000);
 
-          })
+        this.setState({
+            displayClass: 'count-display-green',
+            countDown: true,
+            warningTimerId: warningTimerId,
+            endTimerId: endTimerId,
+        })
       }
   };
 
@@ -125,6 +115,7 @@ class App extends React.Component {
           />
           <CountDownControl
             clickStart={this.handleStart}
+            inputMinute={this.handleMinuteInput}
           />
         </div>
     )
