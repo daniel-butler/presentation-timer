@@ -186,7 +186,14 @@ class App extends React.Component {
 
         }
         let secs = Math.floor(seconds % 60);
-        return mins + 'm ' + secs + 's';
+
+        if(mins === 0){
+            return secs + 's';
+        } else if (secs === 0){
+            return mins + 'm';
+        } else {
+            return mins + 'm ' + secs + 's';
+        }
     };
 
     render() {
