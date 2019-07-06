@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import logo from './logo.png';
 
 class CountDownClock extends React.Component {
     displayCountDown(){
@@ -198,6 +199,13 @@ class App extends React.Component {
                         remainingSeconds={this.state.remainingSeconds}
                         formatter={this.formatSecondsToTimer}
                     />
+                    <div className="logo-wrapper">
+                        <img
+                            className="logo"
+                            src={logo}
+                            alt="The CORE Group"
+                        />
+                    </div>
                     <CountDownControl
                         inputMinute={this.handleMinuteInput}
                         remainingSeconds={this.state.remainingSeconds}
